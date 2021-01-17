@@ -1,12 +1,41 @@
 import React from 'react'
 import Input from 'components/input'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import firebase from 'firebase'
 
 export default () => {
+  const history = useHistory()
+
   const handleLogin = async (event) => {
     event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((cred) => {
+        history.replace('/')
+      })
+      .catch((error) => {
+        const { code, message } = error
+        switch (code) {
+          case 'auth/wrong-password':
+            alert('The password is wrong.')
+            break
+          case 'auth/invalid-email':
+            alert('The email is not valid.')
+            break
+          case 'auth/user-disabled':
+            alert('This account is suspended.')
+            break
+          case 'auth/user-not-found':
+            alert('There is no user corresponding to the given email.')
+            break
+          default:
+            alert(message)
+        }
+      })
   }
 
   return (
