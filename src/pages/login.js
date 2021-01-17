@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Input from 'components/input'
 import { Link, useHistory } from 'react-router-dom'
 import firebase from 'firebase'
+import { useAuth } from 'contexts/auth'
 
 export default () => {
   const history = useHistory()
+  const { user } = useAuth()
+
+  useEffect(() => {
+    if (user) history.replace('/')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const handleLogin = async (event) => {
     event.preventDefault()
