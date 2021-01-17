@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
+    "firebase": "^8.2.3",
     "postcss": "7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
