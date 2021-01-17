@@ -1,11 +1,45 @@
 import React from 'react'
 import Input from 'components/input'
 import { Link } from 'react-router-dom'
+import firebase from 'firebase'
 
 export default () => {
-  const handleRegister = (event) => {
-    // TODO:
+  const handleRegister = async (event) => {
     event.preventDefault()
+    const email = event.target.email.value
+    const username = event.target.username.value
+    const password = event.target.password.value
+    const confirmPassword = event.target.confirmPassword.value
+
+    if (password !== confirmPassword) {
+      window.alert('Please make sure Password and Confirm Password match!')
+      return
+    } else {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(async (cred) => {
+          await cred.user.updateProfile({ username })
+          window.alert('Your account is created!')
+          event.target.reset()
+        })
+        .catch((error) => {
+          const { code, message } = error
+          switch (code) {
+            case 'auth/weak-password':
+              alert('The password is too weak.')
+              break
+            case 'auth/invalid-email':
+              alert('The email is not valid.')
+              break
+            case 'auth/email-already-in-use':
+              alert('The email is already in use.')
+              break
+            default:
+              alert(message)
+          }
+        })
+    }
   }
 
   return (
@@ -37,7 +71,7 @@ export default () => {
             label="Confirm Password"
             type="password"
             placeholder="Enter your password"
-            name="confirm-password"
+            name="confirmPassword"
             required
           />
         </div>
