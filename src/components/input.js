@@ -12,13 +12,12 @@ export default ({
       <b>{label}</b>
     </label>
     <input
-      className="block"
       type={type}
       placeholder={placeholder}
       name={name}
       id={name}
       required={required}
-      className="appearance-none outline-none focus:outline-none mt-1 focus:ring block w-full shadow-sm sm:text-sm rounded-none px-4 py-2"
+      className="block appearance-none outline-none focus:outline-none mt-1 focus:ring w-full shadow-sm sm:text-sm rounded-none px-4 py-2"
     />
   </div>
 )
