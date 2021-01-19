@@ -19,9 +19,8 @@ export default () => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(async (cred) => {
-          await cred.user.updateProfile({ username })
-          window.alert('Your account is created!')
-          event.target.reset()
+          const { uid } = cred.user
+          await firebase.database().ref(`users/${uid}`).set({ username })
         })
         .catch((error) => {
           const { code, message } = error
@@ -55,7 +54,7 @@ export default () => {
           />
           <Input
             label="Email"
-            type="text"
+            type="email"
             placeholder="Enter your email"
             name="email"
             required
