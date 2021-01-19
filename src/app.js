@@ -9,6 +9,7 @@ import Navbar from 'components/navbar'
 import Home from 'pages/home'
 import Login from 'pages/login'
 import Register from 'pages/register'
+import TicTacToe from 'pages/tictactoe'
 import PrivateRoute from 'components/private-route'
 import { AuthProvider } from 'contexts/auth'
 
@@ -27,8 +28,11 @@ export default () => {
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute path="/">
+              <PrivateRoute path="/" exact>
                 <Home />
+              </PrivateRoute>
+              <PrivateRoute path="/tictactoe">
+                <TicTacToe />
               </PrivateRoute>
               <Redirect to="/login" />
             </Switch>
