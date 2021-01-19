@@ -11,6 +11,8 @@ export default ({ children, ...rest }) => {
       render={({ location }) =>
         user ? (
           children
+        ) : user === undefined ? (
+          <div>Loading...</div>
         ) : (
           <Redirect
             to={{

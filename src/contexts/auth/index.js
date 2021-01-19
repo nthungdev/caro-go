@@ -2,7 +2,7 @@ import React, { useContext, createContext, useState, useEffect } from 'react'
 import firebase from 'firebase'
 
 const defaultValue = {
-  user: null,
+  user: undefined,
 }
 
 const AuthContext = createContext()
@@ -19,9 +19,20 @@ export const AuthProvider = ({ children }) => {
   const [state, setState] = useState(defaultValue)
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        setState((s) => ({ ...s, user }))
+        const userData = await firebase
+          .database()
+          .ref('users')
+          .child(user.uid)
+          .once('value')
+        setState((s) => ({
+          ...s,
+          user: {
+            ...user,
+            ...userData.val(),
+          },
+        }))
       } else {
         setState((s) => ({ ...s, user: null }))
       }
