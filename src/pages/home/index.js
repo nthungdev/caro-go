@@ -20,6 +20,8 @@ export default () => {
     if (confirm) await firebase.auth().signOut()
   }
 
+  console.log('user', user)
+
   return (
     <div className="container mx-auto px-4 max-w-md text-center">
       <p>Hello, {user.username}!</p>

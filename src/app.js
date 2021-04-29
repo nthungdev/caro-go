@@ -12,6 +12,7 @@ import Register from 'pages/register'
 import TicTacToe from 'pages/tictactoe'
 import PrivateRoute from 'components/private-route'
 import { AuthProvider } from 'contexts/auth'
+import { TictactoeProvider } from 'contexts/tictactoe'
 
 export default () => {
   return (
@@ -32,7 +33,9 @@ export default () => {
                 <Home />
               </PrivateRoute>
               <PrivateRoute path="/tictactoe">
-                <TicTacToe />
+                <TictactoeProvider>
+                  <TicTacToe />
+                </TictactoeProvider>
               </PrivateRoute>
               <Redirect to="/login" />
             </Switch>

@@ -5,7 +5,7 @@ const defaultValue = {
   user: undefined,
 }
 
-const AuthContext = createContext()
+const AuthContext = createContext(defaultValue)
 
 export const useAuth = () => {
   const auth = useContext(AuthContext)
